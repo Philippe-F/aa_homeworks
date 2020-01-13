@@ -45,11 +45,12 @@ class Playwright
 
     def update
         raise "invalid" unless self.id 
-            PlaywrightDBConnection.instance.execute(<<-SQL, self.name, self.birth_year, self.id)
+        puts self.name, self.birth_year, self.id 
+        PlaywrightDBConnection.instance.execute(<<-SQL, self.name, self.birth_year, self.id)
             UPDATE 
             playwrights
             SET
-            (name = ?, birth_year = ?) 
+            name = ?, birth_year = ?
             WHERE
             id = ?
         SQL
