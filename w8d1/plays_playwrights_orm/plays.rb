@@ -19,6 +19,27 @@ class Play
     data.map { |datum| Play.new(datum) }
   end
 
+  def self.find_by_title(title)
+    data = PlayDBConnection.instance.execute("SELECT plays.title, FROM plays") 
+    data.first.each { |k, v| puts v } 
+  end 
+
+  def self.find_by_playwright(name)
+    # returns all plays written by playwright
+    data = PlayDBConnection.instance.execute(
+      "SELECT
+      plays.title
+      FROM 
+      plays
+      JOIN playwrights
+      ON playwrights.id = plays.playwright_id 
+      WHERE
+      playwright.name = name"
+    )
+
+    data.first.each { |k, v| p v } 
+  end 
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -36,7 +57,7 @@ class Play
     SQL
     self.id = PlayDBConnection.instance.last_insert_row_id
   end
-
+    
   def update
     raise "#{self} not in database" unless self.id
     PlayDBConnection.instance.execute(<<-SQL, self.title, self.year, self.playwright_id, self.id)
