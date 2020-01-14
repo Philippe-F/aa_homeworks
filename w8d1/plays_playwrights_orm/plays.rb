@@ -13,7 +13,7 @@ end
 
 class Play
   attr_accessor :id, :title, :year, :playwright_id
-
+ 
   def self.all
     data = PlayDBConnection.instance.execute("SELECT * FROM plays")
     data.map { |datum| Play.new(datum) }
