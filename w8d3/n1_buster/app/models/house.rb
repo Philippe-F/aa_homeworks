@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: houses
+#
+#  id         :integer          not null, primary key
+#  address    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class House < ApplicationRecord
   has_many :gardeners,
     class_name: 'Gardener',
@@ -19,6 +29,13 @@ class House < ApplicationRecord
   end
 
   def better_seeds_query
-    # TODO: your code here
+    plants = self.plants.includes(:seeds)
+
+    seeds = []
+    plants.each do |plant|
+      seeds << plant.seeds
+    end 
+
+    seeds
   end
 end

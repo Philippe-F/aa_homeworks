@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: albums
+#
+#  id         :integer          not null, primary key
+#  title      :string           not null
+#  artist_id  :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Album < ApplicationRecord
   belongs_to :artist,
     class_name: 'Artist',
@@ -8,4 +19,6 @@ class Album < ApplicationRecord
     class_name: 'Track',
     foreign_key: :album_id,
     primary_key: :id
+
+  
 end

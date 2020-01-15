@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: routes
+#
+#  id         :integer          not null, primary key
+#  number     :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Route < ApplicationRecord
   has_many :buses,
     class_name: 'Bus',
@@ -20,6 +30,18 @@ class Route < ApplicationRecord
   end
 
   def better_drivers_query
-    # TODO: your code here
+    buses = self.buses.includes(:drivers)
+
+    all_drivers = {}
+
+    buses.each do |bus|
+      drivers = []
+      bus.drivers.each do |driver|
+        drivers << driver.name
+      end
+      all_drivers[bus.id] = drivers
+    end
+
+    all_drivers
   end
 end
