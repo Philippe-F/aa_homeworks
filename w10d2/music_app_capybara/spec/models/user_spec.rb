@@ -44,7 +44,7 @@ RSpec.describe User, type: :model do
   end
 
   describe ".find_by_cred" do
-    before { user.save! }
+    user.save! 
 
     it "returns a user given valid credentials" do
       expect(User.find_by_cred("philippe@example.com", 
